@@ -26,13 +26,6 @@ public class Player {
 		return getPlayerID();
 	}
 
-	// places all players' cards at the bottom of the deck IF one of the players is
-	// the winner of the round
-	// Why is this method empty ? Is it needed?
-	public void placeCard() {
-
-	}
-
 	public ArrayList<Cards> getHand() {
 		return hand;
 	}

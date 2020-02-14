@@ -38,14 +38,15 @@ public class GamePlay {
 			dealCards();
 			playRounds();
 			endOfGame();
-			// Needs to be moved, to stop only logging when user doesn't want to play anymore
+			// Needs to be moved, to stop only logging when user doesn't want to play
+			// anymore
 			resetGameState();
 			TestLogger.closeLogger();
 		}
 		s.close();
 	}
 
-	//Reset-Game-State
+	// Reset-Game-State
 	public void resetGameState() {
 		round = 1;
 		choice = 0;
@@ -60,12 +61,12 @@ public class GamePlay {
 		gameWinner = null;
 		winCard = null;
 		user = null;
-		player1=null;
-		player2=null; 
-		player3=null;
-		player4=null;
+		player1 = null;
+		player2 = null;
+		player3 = null;
+		player4 = null;
 	}
-	
+
 	// Log Check method
 	public void logCheck() {
 		if (TopTrumpsCLIApplication.writingTestLogs) {
@@ -102,17 +103,16 @@ public class GamePlay {
 		stats.getHumanWins();
 		stats.getNumberOfDraws();
 		stats.getNumberOfRoundsPlayedInGame();
-
 	}
 
 	// Inserts game data into the database
 	public void insertDatabase() {
 
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
-		// Currently only works with 4 Players, AutoIncrement for GameID is not implemented
+		// Currently only works with 4 Players, AutoIncrement for GameID is not
+		// implemented
 		stats.insertDatabase(drawCounter, gameWinner.toString(), round, user.getWinCounter(), player1.getWinCounter(),
 				player2.getWinCounter(), player3.getWinCounter(), player4.getWinCounter());
-
 	}
 
 	// Player Creation Methods:
@@ -191,7 +191,8 @@ public class GamePlay {
 					.fine("The contents of the complete deck once it has been read in and constructed: ");
 			deckList = mainDeck.getDeck();
 			deckList.forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
 		}
 
 		// Shuffle deck here after initialization
@@ -200,7 +201,8 @@ public class GamePlay {
 			TopTrumpsCLIApplication.testlog2.fine("The contents of the complete deck after it has been shuffled: ");
 			deckList = mainDeck.getDeck();
 			deckList.forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
 		}
 
 		cardsPerPlayer = mainDeck.getDeck().size() / players.size();
@@ -217,7 +219,8 @@ public class GamePlay {
 				TopTrumpsCLIApplication.testlog2.fine(player.getPlayerID());
 				player.getHand().forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
 			}
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
 		}
 		// Shows each player's hand and how many cards they have at the start of the
 		// game after dealing
@@ -250,30 +253,93 @@ public class GamePlay {
 			System.out.println("4: range");
 			System.out.println("5: firepower");
 			do {
+//				System.out.println("Enter the number for your attribute: ");
+//				playerChoice = s.nextInt();
+//				if (logCheck) {
+//					TopTrumpsCLIApplication.testlog2
+//							.fine("The category selected when a user or computer selects a category:");
+//					if (playerChoice == 1) {
+//						chosenCategory = " size ";
+//					} else if (playerChoice == 2) {
+//						chosenCategory = " speed ";
+//					} else if (playerChoice == 3) {
+//						chosenCategory = " cargo ";
+//					} else if (playerChoice == 4) {
+//						chosenCategory = " range ";
+//					} else if (playerChoice == 5) {
+//						chosenCategory = " firepower ";
+//					}
+
 				System.out.println("Enter the number for your attribute: ");
 				playerChoice = s.nextInt();
+				
+				//Testlog for activeUserInputHandler()
 				if (logCheck) {
 					TopTrumpsCLIApplication.testlog2
 							.fine("The category selected when a user or computer selects a category:");
 					if (playerChoice == 1) {
 						chosenCategory = " size ";
+						for (Player player : players) {
+							TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+									+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+									+ player.getTopCard().getSize());
+						}
+						TopTrumpsCLIApplication.testlog2.fine(
+								"---------------------------------------------------------------------------------------");
+
 					} else if (playerChoice == 2) {
 						chosenCategory = " speed ";
+						for (Player player : players) {
+							TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+									+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+									+ player.getTopCard().getSpeed());
+						}
+						TopTrumpsCLIApplication.testlog2.fine(
+								"---------------------------------------------------------------------------------------");
+
 					} else if (playerChoice == 3) {
 						chosenCategory = " cargo ";
+						for (Player player : players) {
+							TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+									+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+									+ player.getTopCard().getSize());
+						}
+						TopTrumpsCLIApplication.testlog2.fine(
+								"---------------------------------------------------------------------------------------");
+
 					} else if (playerChoice == 4) {
 						chosenCategory = " range ";
+						for (Player player : players) {
+							TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+									+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+									+ player.getTopCard().getRange());
+						}
+						TopTrumpsCLIApplication.testlog2.fine(
+								"---------------------------------------------------------------------------------------");
+
 					} else if (playerChoice == 5) {
 						chosenCategory = " firepower ";
+						for (Player player : players) {
+							TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+									+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+									+ player.getTopCard().getFirepower());
+						}
+						TopTrumpsCLIApplication.testlog2.fine(
+								"---------------------------------------------------------------------------------------");
+
 					}
 
-					TopTrumpsCLIApplication.testlog2.fine("Category Selected: " + chosenCategory + "by Human:" + activePlayer.getPlayerID() + "in Round " + round);
-					TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+					TopTrumpsCLIApplication.testlog2.fine("Category Selected: " + chosenCategory + "by Human: "
+							+ activePlayer.getPlayerID() + " in Round " + round);
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
 					for (Player player : players) {
-						TopTrumpsCLIApplication.testlog2.fine("Round " + round + " Player corresponding value of player"
-								+ player.getPlayerID() + " " + player.getTopCard().toString());
+						TopTrumpsCLIApplication.testlog2
+								.fine("Round " + round + " Player corresponding value of player " + player.getPlayerID()
+										+ " " + player.getTopCard().toString());
 					}
-					TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
 
 				}
 			} while (playerChoice != 1 && playerChoice != 2 && playerChoice != 3 && playerChoice != 4
@@ -284,29 +350,93 @@ public class GamePlay {
 		} else {
 			choice = activePlayer.getTopCard().getMax();
 //		//In Gameplay when Category is selected, this is added, and also based on the category the value needs to be represented
+//			if (logCheck) {
+//				TopTrumpsCLIApplication.testlog2
+//						.fine("The category selected when a user or computer selects a category:");
+//				if (choice == 0) {
+//					chosenCategory = " size ";
+//				} else if (choice == 1) {
+//					chosenCategory = " speed ";
+//				} else if (choice == 2) {
+//					chosenCategory = " cargo ";
+//				} else if (choice == 3) {
+//					chosenCategory = " range ";
+//				} else if (choice == 4) {
+//					chosenCategory = " firepower ";
+//				}
+			
+			//Testlog for choosing category
 			if (logCheck) {
 				TopTrumpsCLIApplication.testlog2
 						.fine("The category selected when a user or computer selects a category:");
+				
+				//if size is selected (equals choice ==0)
 				if (choice == 0) {
 					chosenCategory = " size ";
+					for (Player player : players) {
+						TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+								+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+								+ player.getTopCard().getSize());
+					}
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
+					
+				//if speed is selected (equals choice ==1)
 				} else if (choice == 1) {
 					chosenCategory = " speed ";
+					for (Player player : players) {
+						TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+								+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+								+ player.getTopCard().getSpeed());
+					}
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
+					
+					//if cargo is selected (equals choice ==2)
 				} else if (choice == 2) {
 					chosenCategory = " cargo ";
+					for (Player player : players) {
+						TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+								+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+								+ player.getTopCard().getCargo());
+					}
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
+					
+					//if range is selected (equals choice ==3)
 				} else if (choice == 3) {
 					chosenCategory = " range ";
+					for (Player player : players) {
+						TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+								+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+								+ player.getTopCard().getRange());
+					}
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
+
+					//if firepower is selected (equals choice ==4)
 				} else if (choice == 4) {
 					chosenCategory = " firepower ";
+					for (Player player : players) {
+						TopTrumpsCLIApplication.testlog2.fine("Corresponding value of category" + chosenCategory
+								+ " by Player " + player.getPlayerID() + " in Round " + round + " is "
+								+ player.getTopCard().getFirepower());
+					}
+					TopTrumpsCLIApplication.testlog2.fine(
+							"---------------------------------------------------------------------------------------");
 				}
 
-				TopTrumpsCLIApplication.testlog2.fine("Category Selected: " + chosenCategory + "by AI:" + activePlayer.getPlayerID()+ "in Round " + round);
-				TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+				//Display category selected in specific round
+				TopTrumpsCLIApplication.testlog2.fine("Category Selected: " + chosenCategory + "by AI: "
+						+ activePlayer.getPlayerID() + " in Round " + round);
+				TopTrumpsCLIApplication.testlog2.fine(
+						"---------------------------------------------------------------------------------------");
 				for (Player player : players) {
-					TopTrumpsCLIApplication.testlog2.fine("Round " + round + " Player corresponding value of player"
+					TopTrumpsCLIApplication.testlog2.fine("Round " + round + ": Player's corresponding value of player "
 							+ player.getPlayerID() + " " + player.getTopCard().toString());
 				}
-				TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
-
+				TopTrumpsCLIApplication.testlog2.fine(
+						"---------------------------------------------------------------------------------------");
 			}
 		}
 	}
@@ -348,17 +478,6 @@ public class GamePlay {
 				roundVictor = player;
 				winCard = roundVictor.getTopCard();
 			}
-		}
-
-		// In Gameplay at the end of each round
-		if (logCheck) {
-			TopTrumpsCLIApplication.testlog2
-					.fine("The content s of the users deck and the computers deck(s) once they have been allocated: ");
-			for (Player player : players) {
-				TopTrumpsCLIApplication.testlog2.fine(player.getPlayerID());
-				player.getHand().forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
-			}
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
 		}
 	}
 
@@ -406,13 +525,13 @@ public class GamePlay {
 		System.out.println(
 				"Round " + round + ": This round was a draw, common pile nows has " + commonPile.size() + " cards");
 
-		// TestLog stuff for the method below
-
+		// TestLog for the communal pile in a draw
 		if (logCheck) {
 			TopTrumpsCLIApplication.testlog2
 					.fine("The contents of the communal pile when cards are added or removed from it: ");
 			commonPile.forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
 		}
 	}
 
@@ -429,19 +548,7 @@ public class GamePlay {
 			commonPile.remove(0);
 		}
 
-		// TestLog code below
-
-		// In Gameplay at the position when cards are compared - getCardsInPlay method
-		// needed
-		if (logCheck) {
-			TopTrumpsCLIApplication.testlog2.fine(
-					"The contents of the current cards in play (the cards from the top of the users deck and the computers deck(s)):");
-			for (Player player : players) {
-				TopTrumpsCLIApplication.testlog2.fine(player.getHand().toString());
-			}
-			TopTrumpsCLIApplication.testlog2.fine("---------------------------------------------------------------------------------------");
-		}
-
+		// Winner gets the card of the loser(s)
 		for (Player player : players) {
 			if (!player.equals(roundVictor)) {
 				roundVictor.getHand().add(player.getTopCard());
@@ -449,6 +556,19 @@ public class GamePlay {
 			}
 		}
 		activePlayer = roundVictor; // makes the game acknowledge when a round has a victory
+
+		// In Gameplay at the end of each round
+		if (logCheck) {
+			TopTrumpsCLIApplication.testlog2
+					.fine("The contents of the users deck and the computers deck(s) after a round: ");
+			for (Player player : players) {
+				TopTrumpsCLIApplication.testlog2.fine(player.getPlayerID());
+				player.getHand().forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
+			}
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
+		}
+
 	}
 
 //		Removes any players with no cards left
@@ -469,7 +589,7 @@ public class GamePlay {
 	public int nextRound() {
 		round++;
 		for (Player player : players) {
-			// Hinzufügen, dass aktuelle Karte nach hinten gepackt wird.
+			// Current cards are added at the end of the deck.
 			Cards tempCard = player.getTopCard();
 			player.getHand().remove(0);
 			player.getHand().add(tempCard);
@@ -483,9 +603,9 @@ public class GamePlay {
 		decideFirstTurn();
 		while (players.size() > 1) {
 			System.out.println("\n" + "Round " + round + "\n" + "Round " + round + ": Players have drawn their cards");
-			//To Test Something ////
+			// To Test Something ////
 			for (Player player : players) {
-				System.out.println(player.getPlayerID()+ " has " + player.getHand().size() + " cards");
+				System.out.println(player.getPlayerID() + " has " + player.getHand().size() + " cards");
 			}
 			///////////////////////////////////////////////////
 			displayUserHand(players.get(0), user);
@@ -495,8 +615,8 @@ public class GamePlay {
 			removeLosers();
 			nextRound(); // end of loop
 
-			// By uncommenting this you can directly see how much every player has each
-			// round
+//			By uncommenting this you can directly see how much every player has each
+//			 round
 //				for (Player player : players) {
 //					System.out.println(player.getPlayerID() + " " + player.getHand().size());
 //				}
@@ -514,6 +634,11 @@ public class GamePlay {
 		System.out.println("Game End");
 		System.out.println("The overall winner was " + gameWinner.toString());
 		System.out.println("Scores:");
+
+		// The winner of the game - logged in the testlog
+		if (logCheck) {
+			TopTrumpsCLIApplication.testlog2.fine("The winner is: " + gameWinner);
+		}
 
 		for (Player player : endGameArray) {
 			System.out.println(player.toString() + ": " + player.getWinCounter());
@@ -669,7 +794,8 @@ public class GamePlay {
 	public void setS(Scanner s) {
 		this.s = s;
 	}
-	//Just for unit-Testing
+
+	// Just for unit-Testing
 	public void createPlayers2(int numP) {
 
 		// Creates User Player
