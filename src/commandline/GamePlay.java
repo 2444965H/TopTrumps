@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
+//MVC: Mostly Model except for the 3 methods
+//MVC: 3 Controller methods that connects View with Model
+//interaction with data (e.g. initialize deck), interaction with user input (activeUserInputHandler), interaction with database (insertdatabase & printstats)
+//MVC: View is scattered
+
 public class GamePlay {
 
 	// Declare Variables
@@ -272,8 +277,8 @@ public class GamePlay {
 
 				System.out.println("Enter the number for your attribute: ");
 				playerChoice = s.nextInt();
-				
-				//Testlog for activeUserInputHandler()
+
+				// Testlog for activeUserInputHandler()
 				if (logCheck) {
 					TopTrumpsCLIApplication.testlog2
 							.fine("The category selected when a user or computer selects a category:");
@@ -364,13 +369,13 @@ public class GamePlay {
 //				} else if (choice == 4) {
 //					chosenCategory = " firepower ";
 //				}
-			
-			//Testlog for choosing category
+
+			// Testlog for choosing category
 			if (logCheck) {
 				TopTrumpsCLIApplication.testlog2
 						.fine("The category selected when a user or computer selects a category:");
-				
-				//if size is selected (equals choice ==0)
+
+				// if size is selected (equals choice ==0)
 				if (choice == 0) {
 					chosenCategory = " size ";
 					for (Player player : players) {
@@ -380,8 +385,8 @@ public class GamePlay {
 					}
 					TopTrumpsCLIApplication.testlog2.fine(
 							"---------------------------------------------------------------------------------------");
-					
-				//if speed is selected (equals choice ==1)
+
+					// if speed is selected (equals choice ==1)
 				} else if (choice == 1) {
 					chosenCategory = " speed ";
 					for (Player player : players) {
@@ -391,8 +396,8 @@ public class GamePlay {
 					}
 					TopTrumpsCLIApplication.testlog2.fine(
 							"---------------------------------------------------------------------------------------");
-					
-					//if cargo is selected (equals choice ==2)
+
+					// if cargo is selected (equals choice ==2)
 				} else if (choice == 2) {
 					chosenCategory = " cargo ";
 					for (Player player : players) {
@@ -402,8 +407,8 @@ public class GamePlay {
 					}
 					TopTrumpsCLIApplication.testlog2.fine(
 							"---------------------------------------------------------------------------------------");
-					
-					//if range is selected (equals choice ==3)
+
+					// if range is selected (equals choice ==3)
 				} else if (choice == 3) {
 					chosenCategory = " range ";
 					for (Player player : players) {
@@ -414,7 +419,7 @@ public class GamePlay {
 					TopTrumpsCLIApplication.testlog2.fine(
 							"---------------------------------------------------------------------------------------");
 
-					//if firepower is selected (equals choice ==4)
+					// if firepower is selected (equals choice ==4)
 				} else if (choice == 4) {
 					chosenCategory = " firepower ";
 					for (Player player : players) {
@@ -426,7 +431,7 @@ public class GamePlay {
 							"---------------------------------------------------------------------------------------");
 				}
 
-				//Display category selected in specific round
+				// Display category selected in specific round
 				TopTrumpsCLIApplication.testlog2.fine("Category Selected: " + chosenCategory + "by AI: "
 						+ activePlayer.getPlayerID() + " in Round " + round);
 				TopTrumpsCLIApplication.testlog2.fine(
@@ -525,7 +530,7 @@ public class GamePlay {
 		System.out.println(
 				"Round " + round + ": This round was a draw, common pile nows has " + commonPile.size() + " cards");
 
-		// TestLog for the communal pile in a draw
+		// TestLog for the communal pile in a draw - adding cards to pile
 		if (logCheck) {
 			TopTrumpsCLIApplication.testlog2
 					.fine("The contents of the communal pile when cards are added or removed from it: ");
@@ -548,6 +553,16 @@ public class GamePlay {
 			commonPile.remove(0);
 		}
 
+		// TestLog for the communal pile in a draw - empty communal pile
+		if (logCheck && commonPileSize > 0) {
+			TopTrumpsCLIApplication.testlog2
+					.fine("The contents of the communal pile when cards are added or removed from it: ");
+			//commonPile.forEach(Card -> TopTrumpsCLIApplication.testlog2.fine(Card.toString()));
+			TopTrumpsCLIApplication.testlog2.fine("Cards have been removed from the communal pile. The communal pile size is: " + commonPile.size());
+			TopTrumpsCLIApplication.testlog2
+					.fine("---------------------------------------------------------------------------------------");
+		}
+		
 		// Winner gets the card of the loser(s)
 		for (Player player : players) {
 			if (!player.equals(roundVictor)) {

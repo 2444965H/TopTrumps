@@ -22,6 +22,7 @@ public class CardDeck {
 		this.deck = deck;
 	}
 
+	// MVC: Controller
 	public void initializeDeck() {
 		File file = new File("StarCitizenDeck.txt");
 
@@ -37,9 +38,9 @@ public class CardDeck {
 			// THING IS PRINTED OUT
 			while ((line = bufferedReader.readLine()) != null) {
 				String[] splited = line.split(" ");
-				deck.add(new Cards(splited[0], Integer.parseInt(splited[1]), Integer.parseInt(splited[2]), Integer.parseInt(splited[3]),  Integer.parseInt(splited[4]), Integer.parseInt(splited[5])));
-				
-				
+				deck.add(new Cards(splited[0], Integer.parseInt(splited[1]), Integer.parseInt(splited[2]),
+						Integer.parseInt(splited[3]), Integer.parseInt(splited[4]), Integer.parseInt(splited[5])));
+
 			}
 //			for(Cards card : deck) System.out.println(card.toString()); //prints out all the cards
 //			System.out.println(deck.size()); //prints out deck
@@ -59,25 +60,20 @@ public class CardDeck {
 	}
 
 ////////////////////////////////////////////
-	
+
 	public void setDeck(ArrayList<Cards> deck) {
 		this.deck = deck;
 	}
 
-
 	public void dealCards(int cardsPerPlayer, Player player) {
 		for (int i = 0; i < cardsPerPlayer; i++) {
 			player.addCard(deck.get(i));
-		} 
-		//now remove cards from deck after the card has been dealt to player
+		}
+		// now remove cards from deck after the card has been dealt to player
 		int temp = cardsPerPlayer;
 		for (int i = 0; temp > 0; temp--) {
 			deck.remove(i);
 		}
-	}
-
-	// Cards that were checked in previous method are now placed in common pile
-	public void addCommonPile() {
 	}
 
 	public ArrayList<Cards> getDeck() {
