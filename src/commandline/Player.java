@@ -45,5 +45,9 @@ public class Player {
 	public Cards getTopCard() {
 		return hand.get(0);
 	}
+	
+	public void setWinCounter(int winCounter) {
+		this.winCounter = winCounter;
+	}
 
 }
