@@ -158,9 +158,143 @@ h1 {
   
   <script type="text/javascript">
   function initalize() {
-    getRound();
-    showPlayerSelection();
+    
   }
+
+
+  <#--  Still need create players btns and logic (setPlayers())  -->
+
+  <#--  on click: new Game  
+  as next round but also call resetGameState, setPlayers(), dealcards and decideFirstTurn(Order IMPORTANT!!!)-->
+
+  <#--  On click: Category btn 
+  call activeUserInput handler, display all cards, if user: display options,->
+
+
+  <#--  On click: show Winner btn
+  call findRoundWinner, drawChecker, drawHandler, victoryHandler, removeLosers, endGame + display round winner -->
+
+  <#--  On click: next round btn  
+  call nextRound, display "players have drawn cards", "user card", activeplayer -->
+
+  <#--  on endgame: display game is over, stats, last 2 player cards  -->
+
+
+<#--  Beggining of Game  / new Game btn  -->
+
+function resetGameState() {
+	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/resetGameState"); 
+	if (!xhr) {
+	alert("CORS not supported");
+	}
+	<#--  xhr.onload = function(e) {
+	};  -->
+	xhr.send();		
+	}
+
+function setPlayers(num) {
+    var xhr = createCORSRequest('PUT', "http://localhost:7777/toptrumps/setPlayers?num="+num); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.onload = function(e) { 
+			<#--  set playerNum to response / Frontend stuff -->
+		};
+		xhr.send();		
+  	}
+
+  function dealCards() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/dealCards"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	 }
+
+  function decideFirstTurn() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/decideFirstTurn"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	 }
+
+<#--  Needs work I think  -->
+  function nextRound() {
+    var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/nextRound"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();
+  }
+
+<#--  Category btn or category selection --> 
+  function activeUserInputHandler(int playerChoice) {
+    var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/activeUserInputHandler?playerChoice="+playerChoice); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();
+  }
+
+<#-- show Winner btn  -->
+
+  function findRoundWinner() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/findRoundWinner"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
+  function drawChecker() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawChecker"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
+  function drawHandler() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawHandler"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
+  function victoryHandler() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/victoryHandler"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
+  function removeLosers() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/removeLosers"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
+  function endGame() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/endGame"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.onload = function(e) {
+ 			var responseText = xhr.response; 
+			if (responseText.equals("yes")) {
+				<#--  Handle endGame, call endGameArray(? might need to make it a variable in Gameplay.java)  -->
+				<#--  Call endGame display, playerscores etc  -->
+			}
+		};
+		xhr.send();		
+	}
+
+  <#--  Front-end/Display methods  -->
 
     function getRound() {
 		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getRound"); 
@@ -173,18 +307,6 @@ h1 {
 		};
 		xhr.send();		
 	 }
-
-  function choosePlayers() {
-    var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/choosePlayers"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.onload = function(e) {
- 			var responseText = xhr.response; 
-			$("#choosePlayers").text(responseText);
-		};
-		xhr.send();		
-  }
 
 function showPlayerSelection(){
     $('#container').hide();
