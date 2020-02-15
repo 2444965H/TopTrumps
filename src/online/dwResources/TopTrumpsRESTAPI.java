@@ -34,62 +34,54 @@ import commandline.TopTrumpsDatabase;
 /**
  * This is a Dropwizard Resource that specifies what to provide when a user
  * requests a particular URL. In this case, the URLs are associated to the
- * different REST API methods that you will need to expose the game commands
- * to the Web page.
+ * different REST API methods that you will need to expose the game commands to
+ * the Web page.
  * 
- * Below are provided some sample methods that illustrate how to create
- * REST API methods in Dropwizard. You will need to replace these with
- * methods that allow a TopTrumps game to be controled from a Web page.
+ * Below are provided some sample methods that illustrate how to create REST API
+ * methods in Dropwizard. You will need to replace these with methods that allow
+ * a TopTrumps game to be controled from a Web page.
  */
 public class TopTrumpsRESTAPI {
 
-	/** A Jackson Object writer. It allows us to turn Java objects
-	 * into JSON strings easily. */
-	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-	
-	GamePlay g = new GamePlay();
-	
 	/**
-	 * Contructor method for the REST API. This is called first. It provides
-	 * a TopTrumpsJSONConfiguration from which you can get the location of
-	 * the deck file and the number of AI players.
+	 * A Jackson Object writer. It allows us to turn Java objects into JSON strings
+	 * easily.
+	 */
+	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
+	/**
+	 * Contructor method for the REST API. This is called first. It provides a
+	 * TopTrumpsJSONConfiguration from which you can get the location of the deck
+	 * file and the number of AI players.
+	 * 
 	 * @param conf
 	 */
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
-		
+
 	}
-	
-//		TBC
-	@GET 
-	@Path("/getGame")
-	public void startGame() {
-		
-	}
-	
-	@GET 
-	@Path("/getStats")
-	public void getStats() {
-		
-	}
-	
-	
-	//game play methods
-	
+
+//	Creates instance of a GamePlay object
+	GamePlay g = new GamePlay();
+
+// Game play methods
+
+//	Returns the game round
 	@GET
 	@Path("/getRound")
 	public String getRound() throws JsonProcessingException {
-		int	res = 100;
+		int res = g.getRound();
 		return oWriter.writeValueAsString(res);
 	}
-	
+
+//	Creates the number of players based on the passed parameter
 	@PUT
 	@Path("/setPlayers")
 	public void setPlayers(@QueryParam("num") int num) throws JsonProcessingException {
-		
+
 		if (num == 1) {
 			g.setPlayer1(new Player("AI Player 1", new ArrayList<Cards>()));
 			g.getPlayers().add(g.getPlayer1());
-		} else if (num== 2) {
+		} else if (num == 2) {
 			g.setPlayer1(new Player("AI Player 1", new ArrayList<Cards>()));
 			g.setPlayer2(new Player("AI Player 2", new ArrayList<Cards>()));
 			g.getPlayers().add(g.getPlayer1());
@@ -102,7 +94,7 @@ public class TopTrumpsRESTAPI {
 			g.getPlayers().add(g.getPlayer1());
 			g.getPlayers().add(g.getPlayer2());
 			g.getPlayers().add(g.getPlayer3());
-		} else if (num == 4) { 
+		} else if (num == 4) {
 			g.setPlayer1(new Player("AI Player 1", new ArrayList<Cards>()));
 			g.setPlayer2(new Player("AI Player 2", new ArrayList<Cards>()));
 			g.setPlayer3(new Player("AI Player 3", new ArrayList<Cards>()));
@@ -114,34 +106,34 @@ public class TopTrumpsRESTAPI {
 		}
 		// endGameArray is created here along with the players array (is a clone of the
 		// players array)
-		endGameArray(); 
-		
+		endGameArray();
+		dealCards();
 	}
-	
-	//Reset-Game-State
-		public void resetGameState() {
-			g.setRound(1);
-			g.setChoice(0);
-			g.setDraw(false);
-			g.setDrawCounter(0);
-			g.setPlayers(null);
-			g.setPlayers(new ArrayList<Player>());
-			g.setCommonPile(null);
-			g.setCommonPile(new ArrayList<Cards>());
-			g.setRoundVictor(null);
-			g.setActivePlayer(null);
-			g.setGameWinner(null);
-			g.setWinCard(null);
-			g.setUser(null);
-			g.setPlayer1(null);
-			g.setPlayer2(null); 
-			g.setPlayer3(null);
-			g.setPlayer4(null);
-		}
-	
-//	Deal cards to players
+
+//Resets key game variables at the start of the game
 	@GET
-	@Path("/dealCards")
+	@Path("/resetGameState")
+	public void resetGameState() {
+		g.setRound(1);
+		g.setChoice(0);
+		g.setDraw(false);
+		g.setDrawCounter(0);
+		g.setPlayers(null);
+		g.setPlayers(new ArrayList<Player>());
+		g.setCommonPile(null);
+		g.setCommonPile(new ArrayList<Cards>());
+		g.setRoundVictor(null);
+		g.setActivePlayer(null);
+		g.setGameWinner(null);
+		g.setWinCard(null);
+		g.setUser(null);
+		g.setPlayer1(null);
+		g.setPlayer2(null);
+		g.setPlayer3(null);
+		g.setPlayer4(null);
+	}
+
+//	Deal cards to players
 	public void dealCards() {
 		ArrayList<Cards> deckList;
 		CardDeck mainDeck = new CardDeck(new ArrayList<Cards>());
@@ -151,70 +143,60 @@ public class TopTrumpsRESTAPI {
 			mainDeck.dealCards(cardsPerPlayer, player);
 		}
 	}
-	
-//	Creates an array to be used for the scores at the end of the game
 
+//	Creates an array to be used for the scores at the end of the game
 	public void endGameArray() {
 		ArrayList<Player> endGameArray = (ArrayList<Player>) g.getPlayers().clone();
-	}	
-	
-	
-	
-//	Selects random player for beginning of game
-	public Player randomSelectPlayer() {
+	}
 
+//	Selects random player for the beginning of a new game
+	public Player randomSelectPlayer() {
 		Random rand = new Random();
 		int randomPlayerIndex = rand.nextInt(g.getPlayers().size() - 1);
-
 		Player selectedPlayer = g.getPlayers().get(randomPlayerIndex);
 		return selectedPlayer;
 	}
-	
+
 //  Assigns randomSelectPlayer result to activePlayer variable 	
-	@GET
-	@Path("/decideFirstTurn")
 	public void decideFirstTurn() {
 		g.setActivePlayer(randomSelectPlayer());
 	}
-	
+
 //	UserInputHandler -  Handles user input when they are the selected player,
 //	and has AI players automatically choose the highest category on their card
-	
 	@PUT
 	@Path("/activeUserInput")
 	public void activeUserInputHandler(@QueryParam("playerChoice") int playerChoice) {
-
 		if (g.getActivePlayer().equals(g.getUser())) {
 			g.setChoice(playerChoice);
 //			Handles AI choice if they are the selected player
 		} else {
-			g.setChoice(g.getActivePlayer().getTopCard().getMax());			
+			g.setChoice(g.getActivePlayer().getTopCard().getMax());
 		}
 	}
-	
-	
+
 // Finds the Round Winner
 	@GET
 	@Path("/findRoundWinner")
 	public void findRoundWinner() {
 		g.setRoundVictor(g.getPlayers().get(0));
 		for (Player player : g.getPlayers()) {
-			if (player.getTopCard().attributeArray().get(g.getChoice()) >= g.getRoundVictor().getTopCard().attributeArray()
-					.get(g.getChoice())) {
+			if (player.getTopCard().attributeArray().get(g.getChoice()) >= g.getRoundVictor().getTopCard()
+					.attributeArray().get(g.getChoice())) {
 				g.setRoundVictor(player);
 				g.setWinCard(g.getRoundVictor().getTopCard());
 			}
-		}	
+		}
+		drawChecker();
 	}
-	
-//		Checks for draw
-	@GET
-	@Path("/drawChecker")
+
+// Checks for draw
 	public void drawChecker() {
 		g.setDraw(false);
 		for (Player player : g.getPlayers()) {
 			if (!player.equals(g.getRoundVictor())) {
-				if (player.getTopCard().attributeArray().get(g.getChoice()) == g.getWinCard().attributeArray().get(g.getChoice())) {
+				if (player.getTopCard().attributeArray().get(g.getChoice()) == g.getWinCard().attributeArray()
+						.get(g.getChoice())) {
 					g.setDraw(true);
 				}
 			}
@@ -226,28 +208,22 @@ public class TopTrumpsRESTAPI {
 			drawHandler();
 		}
 	}
-	
-	// Handles draws when drawChecker finds the round is a draw
-	@GET
-	@Path("/drawHandler")
+
+// Handles draws when drawChecker finds the round is a draw
 	public void drawHandler() {
 		for (Player player : g.getPlayers()) {
 			g.getCommonPile().add(player.getTopCard());
 			player.getHand().remove(0);
 		}
 		g.setDraw(false);
-//		Send to FTL
-//		System.out.println(
-//				"Round " + round + ": This round was a draw, common pile nows has " + commonPile.size() + " cards");
+		
+		removeLosers();
+//		Send data to to FTL
+		
 	}
-	
-	
+
 // 	Handles victories when drawChecker finds the round is not a draw
-	@GET
-	@Path("/victoryHandler")
 	public void victoryHandler() {
-//		Send to FTL
-//		System.out.println("Round " + round + ": Player " + roundVictor.toString() + " won this round");
 
 		for (Cards card : g.getCommonPile()) {
 			g.getRoundVictor().getHand().add(card);
@@ -264,11 +240,13 @@ public class TopTrumpsRESTAPI {
 			}
 		}
 		g.setActivePlayer(g.getRoundVictor()); // makes the game acknowledge when a round has a victory
+		
+		removeLosers();
+//		Send data to FTL
+
 	}
 
-	//	Removes any players with no cards left
-	@GET
-	@Path("/removeLosers")
+	// Removes any players with no cards left
 	public void removeLosers() {
 		ArrayList<Player> losers = new ArrayList<Player>();
 		for (Player player : g.getPlayers()) {
@@ -280,70 +258,59 @@ public class TopTrumpsRESTAPI {
 		}
 		losers.clear();
 	}
-	
+
 	// Increments the round number and updates players' hands
 	@GET
 	@Path("/nextRound")
-	public int nextRound() {
-		if (g.getRound() != 1) g.setRound(g.getRound() + 1);
+	public void nextRound() {
+		if (g.getRound() != 1)
+			g.setRound(g.getRound() + 1);
 		for (Player player : g.getPlayers()) {
 			Cards tempCard = player.getTopCard();
 			player.getHand().remove(0);
 			player.getHand().add(tempCard);
 		}
-		return g.getRound();
 	}
-	
-//	Checks if game has ended
+
+//	Checks if game has ended and sends confirmation to GameScreen ftl if so
 	@GET
 	@Path("/endGame")
 	public String endGame() throws JsonProcessingException {
-		if(g.getPlayers().size() <= 1) {
+		if (g.getPlayers().size() <= 1) {
 			g.setRound(g.getRound() - 1);
 			g.setGameWinner(g.getPlayers().get(0));
 			return oWriter.writeValueAsString("yes");
 		}
 		return null;
 	}
-	
-//	public void gameEndHandler() {
-//		g.setRound(g.getRound() - 1);
-//		g.setGameWinner(g.getPlayers().get(0));
-//		
-//		Send to FTL
-//		System.out.println("Game End");
-//		System.out.println("The overall winner was " + gameWinner.toString());
-//		System.out.println("Scores:");
 
-//		for (Player player : g.endGameArray) {
-//			System.out.println(player.toString() + ": " + player.getWinCounter());
-//		}
-//	}
-	
-	
-//	public void playRound() {
-//		
-//	}
-	
-	
+//	When game has ended sets game winner
+	public void gameEndHandler() {
+		g.setRound(g.getRound() - 1);
+		g.setGameWinner(g.getPlayers().get(0));
+	}
+
 //	Display Statistics methods
+	
+//	Retrieve the total number of games from the database and send to Statistics.ftl
 	@GET
 	@Path("/numOfGames")
 	public String numOfGames() throws SQLException, JsonProcessingException {
-		
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
-		int res = stats.getNumberOfGames();		
+		int res = stats.getNumberOfGames();
 		return oWriter.writeValueAsString(res);
 	}
-	
+
+//	Retrieve the number of games won by the user from the database and send to Statistics.ftl
 	@GET
 	@Path("/humanWins")
 	public String humanWins() throws JsonProcessingException, SQLException {
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
-		int res = stats.getHumanWins();		
+		int res = stats.getHumanWins();
 		return oWriter.writeValueAsString(res);
 	}
-	
+
+//	Retrieve the number of games won by the AI from the database and send to Statistics.ftl
 	@GET
 	@Path("/AI1Wins")
 	public String AIWins() throws SQLException, JsonProcessingException {
@@ -353,23 +320,25 @@ public class TopTrumpsRESTAPI {
 		int res3 = stats.getAI3Wins();
 		int res4 = stats.getAI4Wins();
 		int res = res1 + res2 + res3 + res4;
-		return oWriter.writeValueAsString(res);		
+		return oWriter.writeValueAsString(res);
 	}
-	
+
+//	Retrieve the average number of draws from the database and send to Statistics.ftl
 	@GET
 	@Path("/avgDraw")
 	public String avgDraw() throws SQLException, JsonProcessingException {
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
-		double res = stats.getNumberOfDraws();		
+		double res = stats.getNumberOfDraws();
 		return oWriter.writeValueAsString(res);
 	}
-	
+
+//	Retrieve the longest(most rounds played) game from the database and send to Statistics.ftl
 	@GET
 	@Path("/longestGame")
 	public String longestGame() throws SQLException, JsonProcessingException {
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
-		int res = stats.getNumberOfRoundsPlayedInGame();		
+		int res = stats.getNumberOfRoundsPlayedInGame();
 		return oWriter.writeValueAsString(res);
-		
+
 	}
 }
