@@ -23,7 +23,8 @@ public class TopTrumpsDatabase {
 		private int ai3_round_wins;
 		private int ai4_round_wins;
 		private int round_total;
-		
+		//for getNumberOfGames method
+		private int numberOfGames;
 	
 		//defining the attributes for the connection: user and password
 
@@ -60,6 +61,8 @@ public class TopTrumpsDatabase {
 //			String SQL = "BEGIN;" + "INSERT INTO GAME_STATS(GAME_ID, DRAWS,GAME_WINNER,ROUND_TOTAL,USER_ROUND_WINS,AI1_ROUND_WINS,AI2_ROUND_WINS,AI3_ROUND_WINS,AI4_ROUND_WINS)" + "VALUES (?,?,?,?,?,?,?,?,?)" + "COMMIT;";
 			String SQL = "INSERT INTO GAME_STATS(GAME_ID, DRAWS,GAME_WINNER,ROUND_TOTAL,USER_ROUND_WINS,AI1_ROUND_WINS,AI2_ROUND_WINS,AI3_ROUND_WINS,AI4_ROUND_WINS)" + "VALUES (?,?,?,?,?,?,?,?,?)";
 			int id = 0;
+			
+			
 
 	        try (Connection connect = connect();
 	            java.sql.PreparedStatement pstmt = connect.prepareStatement(SQL,Statement.RETURN_GENERATED_KEYS)) {
@@ -96,6 +99,27 @@ public class TopTrumpsDatabase {
 //	        return id;
 
 	    }
+		
+		//James' Insert
+		//query to return the number of games played overall  
+		public int getNumberOfGames() throws SQLException {
+			Statement stmt = null;
+			String queryOne = "select COUNT(GAME_ID)" + "from public.game_stats"; 
+			try {
+				stmt = connect().createStatement();
+				ResultSet rs = stmt.executeQuery(queryOne);
+				while(rs.next()) {
+					int numberOfGames = rs.getInt("NUMBER_OF_GAMES");
+					System.out.println(numberOfGames+ "\t");
+				}
+			} catch (SQLException e) {
+				System.out.println("Failed to show number of games");	
+			}finally {
+				if (stmt != null) { stmt.close();
+			        }
+			  }
+			return numberOfGames;
+		 }
 
 		//reference for the following getters: https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
 		//query to return how many times the AI1 has won 
