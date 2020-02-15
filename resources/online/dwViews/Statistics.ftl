@@ -58,7 +58,7 @@
 	</head>
 
     <!-- HTML Part -->
-    <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
+    <body onload="initialize()"> <!-- Call the initialize method when the page loads -->
 		
 		<div class = StatsPage>
 			<h1>TopTrumps Game</h1> <img src="https://cdn.shopify.com/s/files/1/0120/0692/products/mockup-4440df99.jpg?v=1560185506" style="width:275px;">     
@@ -80,7 +80,7 @@
 		
 	<script type="text/javascript">
 		
-		function initalize() {
+		function initialize() {
 			
 				numOfGames();
 				humanWins();
@@ -89,17 +89,19 @@
 				longestGame();
 		}
 			
-
+<#--  Redirect to GameScreen page  -->
 		function newGame() {
 			window.location = "http://localhost:7777/toptrumps/game";
 		}
 
+<#--  Redirect to homepage  -->
 		function home() {
 			window.location = "http://localhost:7777/toptrumps";
 		}
 
+<#--  Sends request to RESTAPI in order to retrieve the total number of games  -->
 		function numOfGames() {
-			var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/numOfGames"); /
+			var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/numOfGames"); 
 			if (!xhr) {
   				alert("CORS not supported");
 		}
@@ -110,8 +112,9 @@
 				xhr.send();		
 			}
 
+<#--  Sends request to RESTAPI in order to retrieve the number of games won by the user  -->
 			function humanWins() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/humanWins"); /
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/humanWins"); 
 				if (!xhr) {
   					alert("CORS not supported");
 				}
@@ -122,8 +125,9 @@
 				xhr.send();		
 			}
 
+<#--  Sends request to RESTAPI in order to retrieve the number of games won by the AI -->
 			function AIWins() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AIWins"); /
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AIWins"); 
 				if (!xhr) {
   					alert("CORS not supported");
 				}
@@ -134,8 +138,9 @@
 				xhr.send();		
 			}
 
+<#--  Sends request to RESTAPI in order to retrieve the average number of draws -->
 			function avgDraw() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/avgDraw"); /
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/avgDraw"); 
 				if (!xhr) {
   					alert("CORS not supported");
 				}
@@ -146,8 +151,9 @@
 				xhr.send();		
 			}
 
+<#--  Sends request to RESTAPI in order to retrieve the longest(most rounds played) game  -->
 			function longestGame() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/longestGame"); /
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/longestGame"); 
 				if (!xhr) {
   					alert("CORS not supported");
 				}

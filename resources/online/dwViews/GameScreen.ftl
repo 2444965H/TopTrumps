@@ -13,142 +13,286 @@
   </head>
 
 <!-- CSS part -->
-<style>
-#wholepage{
-	/*background-color: #aaf;*/
-	width: 80%;
-  height: 700px;
-  /*width: 50%;*/
-  /*background-color: powderblue;*/
-	margin-left: auto;
-	margin-right:auto;
-}
-.title{
+	<style>
+		#wholepage{
+			/*background-color: #aaf;*/
+			width: 80%;
+		  height: 700px;
+		  /*width: 50%;*/
+		  /*background-color: powderblue;*/
+			margin-left: auto;
+			margin-right:auto;
+		}
+		.title{
 
-	background-color: #ccc;
-	text-align: center;
-	padding: 2px;
+			background-color: #a5c;
+			text-align: center;
+			padding: 2px;
 
-}
-.round-state{
+		}
+		.round-state{
 
-	background-color: #ccc;
-	text-align: left;
-	color: white;
-	/*padding: 2px;*/
+			background-color: #ccc;
+			text-align: left;
+			color: white;
+			/*padding: 2px;*/
 
 
-}
-.my-container{
-	background-color: grey;
-	height: 650px;
-	/*text-align: center;*/
+		}
+		.my-container{
+			background-color: grey;
+			height: 950px;
+			/*text-align: center;*/
 
-}
-.btn-group-vertical{
-	width: 80%;
-}
-.card{
+		}
+		.btn-group-vertical{
+			width: 80%;
+		}
+		.card{
 
-	height: 300px;
-	max-width: 200px;
-	padding: 2px;
-}
-#selection{
-	background-color: #999;
-	padding: 10px;
-	height: 500px;
-	width: 20%;
-	float: left;
-}
-#user-card{
-	background-color: #454;
-	padding: 10px;
-	height: 500px;
-	width: 20%;
-	float: right;
-}
+			height: 300px;
+			max-width: 200px;
+			padding: 2px;
+		}
+		#selection{
+			background-color: #999;
+			padding: 10px;
+			height: 500px;
+			width: 20%;
+			float: left;
+		}
+		#user-card{
+			background-color: #454;
+			padding: 10px;
+			height: 500px;
+			width: 20%;
+			float: right;
+		}
 
-h1 {
-  text-align:left;
-	font-size: 20px;
-	font-family: "Comic Sans MS", "Comic Sans", cursive;
-}
-</style>
+		h1 {
+		  text-align:left;
+			font-size: 20px;
+			font-family: "Comic Sans MS", "Comic Sans", cursive;
+		}
 
-<!-- begining of page -->
-  <div id="wholepage">
-    <body onload="initalize()">
-   
-     <!-- main heading of game -->
-        <section class="title">
-          <div>
-            <h3>Top Trumps Game </h3>
-          </div>  
-        </section>
+		table, th, td {
+			padding: 10px;
+			border: 1px solid black; 
+			border-collapse: collapse;
+			}
 
-      <!-- declare current round and winner -->
-        <section class="round-state">
-            <p>Play Round<p id="getRound"></p> Players have selected ...</p>
-            
-        </section>
+	</style>
 
-    <div id="selectPlayers">					
-					<h1>Please select the number of players you want to play against:</h1>			
-					<br>
-            <form action="">
-              <input type="radio" name = "player">One Player<br>
-              <input type="radio" name = "player">Two Players<br>
-              <input type="radio" name = "player">Three Players<br> 
-              <input type="radio" name = "player">Four Players
-            </form>
-         <br>
-					<br><button class="btn btn-default" onclick="hidePlayerSelection();" style="padding: 5px;">Begin Game</button><br><br>
+	<!-- begining of page -->
+	  <div id="wholepage">
+		<body onload="initalize()">
+		   
+		     <!-- main heading of game -->
+		        <section class="title">
+		          <div>
+		            <h3>Top Trumps Game </h3>
+		          </div>  
+		        </section>
+
+		      <!-- declare current round and winner -->
+		        <section class="round-state">
+		            <p>Play Round<p id="getRound"></p> Players have selected ...</p>
+		            
+		        </section>
+
+		    	<div id="selectPlayers">					
+							<h1>Please select the number of players you want to play against:</h1>			
+							<br>
+		            <form action="">
+		              <input type="radio" name = "player" id = "one">One Player<br>
+		              <input type="radio" name = "player" id = "two">Two Players<br>
+		              <input type="radio" name = "player" id = "three">Three Players<br> 
+		              <input type="radio" name = "player" id = "four">Four Players<br>
+		            </form>
+		            <br>
+		       
+					<button class="btn btn-success" onclick="hidePlayerSelection();" style="padding: 5px;">Begin Game</button><br><br>
 				</div>
 
-    <!-- cards display section: 2 rows, 4 cols-->
-    <div class="container my-container" id = "container">
-      <div class="row">
-        <div class="col">
-        <div class="row" style= "padding:2px ; max-width: 100%;">
-        <button class="btn btn-success">Next Round</button>
-    </div>
-
-    <!-- should only appear if the user is the acive player -->
-    <div class="btn-group-vertical">
-     <button type="button" class="btn btn-primary">size</button>
-     <button type="button" class="btn btn-primary">speed</button>
-     <button type="button" class="btn btn-primary">cargo</button>
-     <button type="button" class="btn btn-primary">range</button>
-     <button type="button" class="btn btn-primary">firepower</button>
-    </div>  
-    </div>
+			    <!-- cards display section: 2 rows, 4 cols-->
+			 <div class="container my-container" id = "container"><br>
+			    	
+			  <div class="row">
+				 <div class="col">
+				    <div class="row" style= "padding:10px ; max-width: 100%;">
+				        <button class="btn btn-success">Next Round</button>
+				    </div>
+				    <br>
+				    <!-- should only appear if the user is the acive player -->
+				    
+				    </div>
 
 
-    <div class="col" id = "userCard"><img class="card" src="ship.jpg" alt="USER"></div> 
-    <div class="col" id ="AI1Card"><img class="card" src="ship.jpg" alt="AI 1"></div>
-    <div class="col"id ="AI2Card"><img class="card" src="ship.jpg" alt="AI 2"></div>
-    </div>
-    <p></p>
-            
-    <div class="row">
-    <div class="col"></div>
+			    <div class="col" id = "userCard">
+			    <table class="table" cellpadding="2" cellspacing="0" width="100%" style="border: 10px;" rules="">
+			  <thead>
+			    <td>
+			     <img style="display:block;" width="100%" height="100%" src="http://dummyimage.com/68x50/000/fff" />
+			      
+			    </td>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">5</th>
+			    </tr>
+			  </tbody>
+			</table>
+			    </div> 
+			    <div class="col" id ="AI1Card">
+			    	 <table class="table" cellpadding="2" cellspacing="0" width="100%" style="border: 10px;" rules="none">
+			  <thead>
+			    <td>
+			     <img style="display:block;" width="100%" height="100%" src="http://dummyimage.com/68x50/000/fff" />
+			      
+			    </td>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">5</th>
+			    </tr>
+			  </tbody>
+			</table>
 
-            <div class="col"></div> 
+			    </div>
+			    <div class="col"id ="AI2Card">
+			    	<table class="table" cellpadding="2" cellspacing="0" width="100%" style="border: 10px;" rules="none">
+			  <thead>
+			    <td>
+			     <img style="display:block;" width="100%" height="100%" src="http://dummyimage.com/68x50/000/fff" />
+			      
+			    </td>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">5</th>
+			    </tr>
+			  </tbody>
+			</table>
+			    </div>
+			  </div>
 
-           <div class="col"id ="AI3Card"> 
-              <img class="card" src="ship.jpg" alt="AI 3">
-            </div>
-            
-            <div class="col"id ="AI4Card">
-              <img class="card" src="ship.jpg" alt="AI 4">
-            </div> 
-        </div>
 
-          <div class="row" style="background-color: powderblue;">
-            
-          </div>
-        </div>
+
+			    <p></p>
+			            
+			    <div class="row">
+			    <div class="col"></div>
+
+
+			            <div class="col"></div> 
+
+			            <div class="col"id ="AI4Card">
+			  <table class="table" cellpadding="2" cellspacing="0" width="100%" style="border: 10px;" rules="none">
+			  <thead>
+			    <td>
+			     <img style="display:block;" width="100%" height="100%" src="http://dummyimage.com/68x50/000/fff" />
+			      
+			    </td>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">5</th>
+			    </tr>
+			  </tbody>
+			</table>
+			    </div>
+			            
+			           
+
+
+			 <div class="col"id ="AI4Card">
+			  <table class="table" cellpadding="2" cellspacing="0" width="100%" style="border: 10px;" rules="none">
+			  <thead>
+			    <td>
+			     <img style="display:block;" width="100%" height="100%" src="http://dummyimage.com/68x50/000/fff" />
+			      
+			    </td>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">4</th>
+			    </tr>
+			     <tr>
+			      <th scope="row">5</th>
+			    </tr>
+			  </tbody>
+			</table>
+			    </div>
+			              
+			        
+			        </div>
+
+			         <div class="row" style="background-color: powderblue;">end</div>
+			            
+			          
+			   </div>
 
 
       <!-- Jquery Stuff here-->
@@ -161,18 +305,17 @@ h1 {
     
   }
 
-
-  <#--  Still need create players btns and logic (setPlayers())  -->
+<#--  General file logic  -->
+  <#--  Still need create players buttons and logic  -->
 
   <#--  on click: new Game  
-  as next round but also call resetGameState, setPlayers(), dealcards and decideFirstTurn(Order IMPORTANT!!!)-->
+  as next round but also call resetGameState, setPlayers() (order important!)-->
 
   <#--  On click: Category btn 
   call activeUserInput handler, display all cards, if user: display options,->
 
-
   <#--  On click: show Winner btn
-  call findRoundWinner, drawChecker, drawHandler, victoryHandler, removeLosers, endGame + display round winner -->
+  call findRoundWinner, drawChecker,endGame + display round winner -->
 
   <#--  On click: next round btn  
   call nextRound, display "players have drawn cards", "user card", activeplayer -->
@@ -180,8 +323,9 @@ h1 {
   <#--  on endgame: display game is over, stats, last 2 player cards  -->
 
 
-<#--  Beggining of Game  / new Game btn  -->
+<#--  Beginning of Game  / new Game btn  -->
 
+<#--  Sends request to RESTAPI to reset game variables at the start of a new game  -->
 function resetGameState() {
 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/resetGameState"); 
 	if (!xhr) {
@@ -192,6 +336,7 @@ function resetGameState() {
 	xhr.send();		
 	}
 
+<#--  Sends request to RESTAPI to create number of AI players equal to the passed parameter at the start of a new game  -->
 function setPlayers(num) {
     var xhr = createCORSRequest('PUT', "http://localhost:7777/toptrumps/setPlayers?num="+num); 
 		if (!xhr) {
@@ -203,23 +348,7 @@ function setPlayers(num) {
 		xhr.send();		
   	}
 
-  function dealCards() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/dealCards"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	 }
-
-  function decideFirstTurn() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/decideFirstTurn"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	 }
-
-<#--  Needs work I think  -->
+<#--  Sends request to RESTAPI to start a new round (needs work!)  -->
   function nextRound() {
     var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/nextRound"); 
 		if (!xhr) {
@@ -229,6 +358,9 @@ function setPlayers(num) {
   }
 
 <#--  Category btn or category selection --> 
+
+<#--  Sends request to RESTAPI to handle gameplay based on the chosen category. -->
+<#--  Passed parameter indicates whether the user is the active player and adjusts method accordingly  -->  
   function activeUserInputHandler(int playerChoice) {
     var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/activeUserInputHandler?playerChoice="+playerChoice); 
 		if (!xhr) {
@@ -239,6 +371,7 @@ function setPlayers(num) {
 
 <#-- show Winner btn  -->
 
+<#--  Sends request to RESTAPI to find the round winner -->
   function findRoundWinner() {
 		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/findRoundWinner"); 
 		if (!xhr) {
@@ -247,38 +380,7 @@ function setPlayers(num) {
 		xhr.send();		
 	}
 
-  function drawChecker() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawChecker"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	}
-
-  function drawHandler() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawHandler"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	}
-
-  function victoryHandler() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/victoryHandler"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	}
-
-  function removeLosers() {
-		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/removeLosers"); 
-		if (!xhr) {
-  		alert("CORS not supported");
-		}
-		xhr.send();		
-	}
-
+<#--  Sends request to RESTAPI to check if game is over, and if so handles endgame condition (needs work)  -->
   function endGame() {
 		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/endGame"); 
 		if (!xhr) {
@@ -287,15 +389,27 @@ function setPlayers(num) {
 		xhr.onload = function(e) {
  			var responseText = xhr.response; 
 			if (responseText.equals("yes")) {
-				<#--  Handle endGame, call endGameArray(? might need to make it a variable in Gameplay.java)  -->
+				<#--  Handle endGame, call endGameArray(?)  -->
+
+				gameEndHandler()
 				<#--  Call endGame display, playerscores etc  -->
 			}
 		};
 		xhr.send();		
 	}
 
+	<#--  Sends request to RESTAPI to handle the end of the game-->
+  function gameEndHandler() {
+		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/gameEndHandler"); 
+		if (!xhr) {
+  		alert("CORS not supported");
+		}
+		xhr.send();		
+	}
+
   <#--  Front-end/Display methods  -->
 
+<#--  Retrieves the game round from the RESTAPI and displays it where appropriate  -->
     function getRound() {
 		var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getRound"); 
 		if (!xhr) {
@@ -308,10 +422,12 @@ function setPlayers(num) {
 		xhr.send();		
 	 }
 
+<#--Show player selection buttons  -->
 function showPlayerSelection(){
     $('#container').hide();
   }
 
+<#--  Hide player selection button  -->
 function hidePlayerSelection() {
   $('#selectPlayers').hide();
   $('#container').show(); 
@@ -319,69 +435,6 @@ function hidePlayerSelection() {
   $('#AI2Card').hide();
   $('#AI3Card').hide();
   $('#AI4Card').hide();
-}
-
-
-
-
-function startGame(){
-
-}
-
-function numberOfPlayers() {
-
-}
-
-function getNumberOfCardsInCommunalPile() {
-
-}
-
-function namesOfPlayers() {
-
-}
-
-function activePlayer() {
-
-}
-
-function cardCategoryNames() {
-
-}
-
-function getFirstCardDescription() {
-
-}
-
-function getFirstCardValue() {
-
-}
-
-function roundWinner() {
-
-}
-
-function endGameWithoutHumanPlayer(){
-
-}
-
-function getGameWinner() {
-
-}
-
-function playerNames() {
-
-}
-
-function numberOfCards() {
-
-}
-
-function userChosenCategory() {
-
-}
-
-function AIchosenCategory() {
-
 }
 
 </script>
