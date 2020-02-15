@@ -11,6 +11,8 @@ import java.util.Scanner;
 //interaction with data (e.g. initialize deck), interaction with user input (activeUserInputHandler), interaction with database (insertdatabase & printstats)
 //MVC: View is scattered
 
+//For a running database, enable line 95
+
 public class GamePlay {
 
 	// Declare Variables
@@ -43,8 +45,7 @@ public class GamePlay {
 			dealCards();
 			playRounds();
 			endOfGame();
-			// Needs to be moved, to stop only logging when user doesn't want to play
-			// anymore
+			//Needs to be moved, to stop only logging when user doesn't want to play anymore
 			resetGameState();
 			TestLogger.closeLogger();
 		}
@@ -72,7 +73,7 @@ public class GamePlay {
 		player4 = null;
 	}
 
-	// Log Check method
+	//Checks whether Testlog method is activated
 	public void logCheck() {
 		if (TopTrumpsCLIApplication.writingTestLogs) {
 			this.logCheck = true;
@@ -90,13 +91,13 @@ public class GamePlay {
 			res = s.nextInt();
 
 			if (res == 1) {
-				// printStats();
+				printStats();
 				System.out.println("If I had Database this would have been shown");
 			}
 		}
 	}
 
-	// Prints statistics queries from the database
+	//Prints statistics queries from the database
 	public void printStats() throws SQLException {
 
 		TopTrumpsDatabase stats = new TopTrumpsDatabase();
@@ -137,15 +138,15 @@ public class GamePlay {
 		endGameArray = (ArrayList<Player>) players.clone();
 	}
 
-	// Creates User player & appropriate number of AI players based on
-	// user choice, and adds them to the player's array
+	//Creates User player & appropriate number of AI players based on
+	//User choice, and adds them to the player's array
 	public void createPlayers() {
 
-		// Creates User Player
+		//Creates User Player
 		user = new Player("You", new ArrayList<Cards>());
 		players.add(user);
 
-		// Creates AI Players after User has decided how many AI to play against
+		//Creates AI Players after User has decided how many AI to play against
 		int numPlayers = askForAIPlayers();
 
 		if (numPlayers == 1) {
@@ -164,7 +165,7 @@ public class GamePlay {
 			players.add(player1);
 			players.add(player2);
 			players.add(player3);
-		} else if (numPlayers == 4) { // Should here be really else, what if the user puts in 5 or a negative Number?
+		} else if (numPlayers == 4) { 
 			player1 = new Player("AI Player 1", new ArrayList<Cards>());
 			player2 = new Player("AI Player 2", new ArrayList<Cards>());
 			player3 = new Player("AI Player 3", new ArrayList<Cards>());
@@ -244,8 +245,8 @@ public class GamePlay {
 
 	// Play a Round methods:
 
-//	UserInputHandler -  Handles user input when they are the selected player,
-//	and has AI players automatically choose the highest category on their card
+//UserInputHandler -  Handles user input when they are the selected player,
+//and has AI players automatically choose the highest category value on their card
 	public void activeUserInputHandler(Player activePlayer, Player user) {
 		String chosenCategory = null;
 		int playerChoice;
@@ -258,27 +259,10 @@ public class GamePlay {
 			System.out.println("4: range");
 			System.out.println("5: firepower");
 			do {
-//				System.out.println("Enter the number for your attribute: ");
-//				playerChoice = s.nextInt();
-//				if (logCheck) {
-//					TopTrumpsCLIApplication.testlog2
-//							.fine("The category selected when a user or computer selects a category:");
-//					if (playerChoice == 1) {
-//						chosenCategory = " size ";
-//					} else if (playerChoice == 2) {
-//						chosenCategory = " speed ";
-//					} else if (playerChoice == 3) {
-//						chosenCategory = " cargo ";
-//					} else if (playerChoice == 4) {
-//						chosenCategory = " range ";
-//					} else if (playerChoice == 5) {
-//						chosenCategory = " firepower ";
-//					}
-
 				System.out.println("Enter the number for your attribute: ");
 				playerChoice = s.nextInt();
 
-				// Testlog for activeUserInputHandler()
+				//Testlog for activeUserInputHandler()
 				if (logCheck) {
 					TopTrumpsCLIApplication.testlog2
 							.fine("The category selected when a user or computer selects a category:");
@@ -353,22 +337,10 @@ public class GamePlay {
 			// c.close();
 //			Handles AI choice if they are the selected player
 		} else {
+			System.out.println("It is " + getActivePlayer().getPlayerID()+ "'s turn to select a category");
 			choice = activePlayer.getTopCard().getMax();
-//		//In Gameplay when Category is selected, this is added, and also based on the category the value needs to be represented
-//			if (logCheck) {
-//				TopTrumpsCLIApplication.testlog2
-//						.fine("The category selected when a user or computer selects a category:");
-//				if (choice == 0) {
-//					chosenCategory = " size ";
-//				} else if (choice == 1) {
-//					chosenCategory = " speed ";
-//				} else if (choice == 2) {
-//					chosenCategory = " cargo ";
-//				} else if (choice == 3) {
-//					chosenCategory = " range ";
-//				} else if (choice == 4) {
-//					chosenCategory = " firepower ";
-//				}
+
+
 
 			// Testlog for choosing category
 			if (logCheck) {
@@ -528,9 +500,9 @@ public class GamePlay {
 		}
 		draw = false;
 		System.out.println(
-				"Round " + round + ": This round was a draw, common pile nows has " + commonPile.size() + " cards");
+				"Round " + round + ": This round was a draw, common pile nows has " + commonPile.size() + " cards. One card with the highest category values was: " + winCard.toString());
 
-		// TestLog for the communal pile in a draw - adding cards to pile
+		// TestLog code for the method
 		if (logCheck) {
 			TopTrumpsCLIApplication.testlog2
 					.fine("The contents of the communal pile when cards are added or removed from it: ");
@@ -570,9 +542,9 @@ public class GamePlay {
 				player.getHand().remove(0);
 			}
 		}
-		activePlayer = roundVictor; // makes the game acknowledge when a round has a victory
+		activePlayer = roundVictor; //Makes the game acknowledge when a round has a victory
 
-		// In Gameplay at the end of each round
+		//In GamePlay at the end of each round
 		if (logCheck) {
 			TopTrumpsCLIApplication.testlog2
 					.fine("The contents of the users deck and the computers deck(s) after a round: ");
@@ -583,7 +555,6 @@ public class GamePlay {
 			TopTrumpsCLIApplication.testlog2
 					.fine("---------------------------------------------------------------------------------------");
 		}
-
 	}
 
 //		Removes any players with no cards left
@@ -618,11 +589,10 @@ public class GamePlay {
 		decideFirstTurn();
 		while (players.size() > 1) {
 			System.out.println("\n" + "Round " + round + "\n" + "Round " + round + ": Players have drawn their cards");
-			// To Test Something ////
 			for (Player player : players) {
 				System.out.println(player.getPlayerID() + " has " + player.getHand().size() + " cards");
 			}
-			///////////////////////////////////////////////////
+
 			displayUserHand(players.get(0), user);
 			activeUserInputHandler(activePlayer, user);
 			findRoundWinner();
@@ -638,7 +608,7 @@ public class GamePlay {
 		}
 	}
 
-	// End of Game Methods:
+	//End of Game Methods:
 
 //	Handles game end
 	public void gameEndHandler() {

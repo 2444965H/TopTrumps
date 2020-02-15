@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /* This class will shuffle the card deck. This class will also check for a draw by comparing the 5 cards attributes, and will further place the
-*  cards that were satisfying the draw condition within the common pile. 
+*  cards that were satisfying the draw condition within the communal pile. 
 */
 public class CardDeck {
 
