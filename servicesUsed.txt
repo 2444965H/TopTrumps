@@ -1,0 +1,3 @@
+https://github.com/nickalexiadis/top-trumps - the initial git repository got clustered after a while and a new one was created
+
+Afterwards every team member's code was pushed by a single person to this directory: https://github.com/2444965H/TopTrumps
