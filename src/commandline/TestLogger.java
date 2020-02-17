@@ -6,7 +6,7 @@ import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+// Class responsible for initializing the test log
 public class TestLogger {
 
     static private FileHandler testlogHTML;

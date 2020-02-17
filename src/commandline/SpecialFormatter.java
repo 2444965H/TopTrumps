@@ -6,10 +6,10 @@ import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+//	This class is used for the formatting of the test log
 public class SpecialFormatter extends Formatter {
 
 	public SpecialFormatter() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -18,7 +18,6 @@ public class SpecialFormatter extends Formatter {
 		StringBuffer RecordString = new StringBuffer(1000);
 		RecordString.append("<tr>\n");
 		
-
         	RecordString.append("<b>");
             RecordString.append("\t<td>");
             RecordString.append(formatMessage(record));

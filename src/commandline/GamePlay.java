@@ -6,12 +6,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
-//MVC: Mostly Model except for the 3 methods
-//MVC: 3 Controller methods that connects View with Model
-//interaction with data (e.g. initialize deck), interaction with user input (activeUserInputHandler), interaction with database (insertdatabase & printstats)
-//MVC: View is scattered
-
-//For a running database, enable line 95
+//interaction with data (e.g. initialise deck), interaction with user input (activeUserInputHandler), interaction with database (insertdatabase & printstats)
 
 public class GamePlay {
 
@@ -35,8 +30,6 @@ public class GamePlay {
 
 	// playGame Method runs the whole game
 	public void playGame() throws SQLException {
-		// Needs a while(userWantsToQuit = false) loop to go back to the beginning
-		// after a game is completed.
 		boolean userWantsToPlay = true;
 		logCheck();
 		while (userWantsToPlay) {
@@ -45,7 +38,6 @@ public class GamePlay {
 			dealCards();
 			playRounds();
 			endOfGame();
-			//Needs to be moved, to stop only logging when user doesn't want to play anymore
 			resetGameState();
 			TestLogger.closeLogger();
 		}
@@ -121,7 +113,8 @@ public class GamePlay {
 				player2.getWinCounter(), player3.getWinCounter(), player4.getWinCounter());
 	}
 
-	// Player Creation Methods:
+// Player Creation Methods:
+	
 	// Asks User for Number of AI Players
 	public int askForAIPlayers() {
 		int numAI = 0;
@@ -138,8 +131,8 @@ public class GamePlay {
 		endGameArray = (ArrayList<Player>) players.clone();
 	}
 
-	//Creates User player & appropriate number of AI players based on
-	//User choice, and adds them to the player's array
+//Creates User player & appropriate number of AI players based on
+//User choice, and adds them to the player's array
 	public void createPlayers() {
 
 		//Creates User Player
@@ -177,12 +170,12 @@ public class GamePlay {
 		}
 		// endGameArray is created here along with the players array (is a clone of the
 		// players array)
-		endGameArray(); // Not 100% sure it's doing anything
+		endGameArray(); 
 	}
 
 	// Dealing Card Methods:
 
-	// Deals the cards
+// Deals the cards
 	public void dealCards() {
 
 		int cardsPerPlayer;
@@ -203,6 +196,7 @@ public class GamePlay {
 
 		// Shuffle deck here after initialization
 		Collections.shuffle(mainDeck.getDeck());
+		
 		if (logCheck) {
 			TopTrumpsCLIApplication.testlog2.fine("The contents of the complete deck after it has been shuffled: ");
 			deckList = mainDeck.getDeck();
@@ -211,8 +205,10 @@ public class GamePlay {
 					.fine("---------------------------------------------------------------------------------------");
 		}
 
+//		Sets the appropriate cards to be dealt to each player depending on the number of players
 		cardsPerPlayer = mainDeck.getDeck().size() / players.size();
 
+//		Deal cards to players
 		for (Player player : players) {
 			mainDeck.dealCards(cardsPerPlayer, player);
 		}
@@ -243,7 +239,7 @@ public class GamePlay {
 		}
 	}
 
-	// Play a Round methods:
+// Play a Round methods:
 
 //UserInputHandler -  Handles user input when they are the selected player,
 //and has AI players automatically choose the highest category value on their card
@@ -334,8 +330,8 @@ public class GamePlay {
 			} while (playerChoice != 1 && playerChoice != 2 && playerChoice != 3 && playerChoice != 4
 					&& playerChoice != 5);
 			choice = playerChoice - 1;
-			// c.close();
-//			Handles AI choice if they are the selected player
+			
+//		Handles AI choice if they are the selected player
 		} else {
 			System.out.println("It is " + getActivePlayer().getPlayerID()+ "'s turn to select a category");
 			choice = activePlayer.getTopCard().getMax();
@@ -482,9 +478,7 @@ public class GamePlay {
 			}
 		}
 		if (draw == false) {
-			// System.out.println("It was a win");
 			victoryHandler();
-
 			roundVictor.incrementCounter(); // Taken from end of VictoryCounter
 		} else {
 			System.out.println("It was a draw");
@@ -583,7 +577,7 @@ public class GamePlay {
 		return round;
 	}
 
-	// Plays a Round
+	// Plays rounds
 	public void playRounds() throws SQLException {
 
 		decideFirstTurn();
@@ -600,7 +594,7 @@ public class GamePlay {
 			removeLosers();
 			nextRound(); // end of loop
 
-//			By uncommenting this you can directly see how much every player has each
+//			For debugging purposes> By uncommenting this you can directly see how much every player has each
 //			 round
 //				for (Player player : players) {
 //					System.out.println(player.getPlayerID() + " " + player.getHand().size());
@@ -613,8 +607,6 @@ public class GamePlay {
 //	Handles game end
 	public void gameEndHandler() {
 		round--;
-		// Why players.get(0) this is hard coded, wouldn't lead that to always the same
-		// winner
 		gameWinner = players.get(0);
 		System.out.println("Game End");
 		System.out.println("The overall winner was " + gameWinner.toString());
@@ -633,9 +625,10 @@ public class GamePlay {
 // Ends the game, inserts data from the game into the database, and closes the Scanner	
 	public void endOfGame() {
 		gameEndHandler();
-		// insertDatabase(); // Uncomment this when database is connected
+		 insertDatabase(); // Uncomment this when database is connected
 	}
 
+//	Getter and setters for variables
 	public int getRound() {
 		return round;
 	}
@@ -806,7 +799,7 @@ public class GamePlay {
 			players.add(player1);
 			players.add(player2);
 			players.add(player3);
-		} else if (numPlayers == 4) { // Should here be really else, what if the user puts in 5 or a negative Number?
+		} else if (numPlayers == 4) { 
 			player1 = new Player("AI Player 1", new ArrayList<Cards>());
 			player2 = new Player("AI Player 2", new ArrayList<Cards>());
 			player3 = new Player("AI Player 3", new ArrayList<Cards>());
@@ -816,8 +809,8 @@ public class GamePlay {
 			players.add(player3);
 			players.add(player4);
 		}
-		// endGameArray is created here along with the players array (is a clone of the
+		// endGameArray is created here(is a clone of the
 		// players array)
-		endGameArray(); // Not 100% sure it's doing anything
+		endGameArray();
 	}
 }

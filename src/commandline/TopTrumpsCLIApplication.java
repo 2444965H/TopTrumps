@@ -9,7 +9,6 @@ import java.util.logging.*; //logging class
 
 public class TopTrumpsCLIApplication {
 
-//public static final Logger testlog = Logger.getLogger(TopTrumpsCLIApplication.class.getName());
 	public static final Logger testlog2 = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	public static boolean writingTestLogs;
 //final -> so that the logger cannot be manipulated after it has been created
@@ -31,21 +30,17 @@ public class TopTrumpsCLIApplication {
 		TestLogger.initializeLogger();
 		testlog2.setLevel(Level.ALL);
 
-
-		boolean writeGameLogsToFile = false; // Should we write game logs to file?
+		boolean writeGameLogsToFile = false; 
 		if (args[0].equalsIgnoreCase("true")) {
 			writeGameLogsToFile = true; // Command line selection
 			writingTestLogs = writeGameLogsToFile;
-
 		}
-
-		// L's code end
 
 		// State
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 
 		// Loop until the user wants to exit the game
-		// while (!userWantsToQuit) {
+		 while (!userWantsToQuit) {
 		// ----------------------------------------------------
 		// Add your game logic here based on the requirements
 		// ----------------------------------------------------
@@ -55,6 +50,6 @@ public class TopTrumpsCLIApplication {
 		g.playGame();
 		
 		userWantsToQuit = true; // use this when the user wants to exit the game
+		}
 	}
-
 }

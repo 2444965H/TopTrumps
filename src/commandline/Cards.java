@@ -3,6 +3,7 @@ package commandline;
 import java.util.ArrayList;
 
 public class Cards {
+	
 	// private attributes
 	private String description;
 	private int size;
@@ -22,7 +23,7 @@ public class Cards {
 		this.firepower = firepower;
 	}
 
-	// getters
+	// cards attributes getters
 	public String getDescription() {
 		return description;
 	}
@@ -74,7 +75,8 @@ public class Cards {
 		}
 		return maxIndex;
 	}
-
+	
+//	Creates an arrayList composed of the card attribute names
 	public ArrayList<String> attributeNames() {
 		ArrayList<String> arr = new ArrayList<String>();
 		arr.add("size");
